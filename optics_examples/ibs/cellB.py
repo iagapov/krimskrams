@@ -1,0 +1,169 @@
+
+from ocelot.gui.accelerator import *
+import ocelot
+from ocelot import *
+from pylab import *
+from ocelot.cpbd.chromaticity import *
+
+angle_scale = 8. / 10.0
+
+DL1A_1 = SBend(l=0.341678557602, angle=angle_scale*0.0060061926, e1=0.0079280963, e2=-0.0019219037)
+DL1A_2 = SBend(l=0.341678220925, angle=angle_scale*0.003525, e1=0.0019219037, e2=0.0016030963)
+DL1A_3 = SBend(l=0.341678145898, angle=angle_scale*0.002675, e1=-0.0016030963, e2=0.0042780963)
+DL1A_4 = SBend(l=0.341678106809, angle=angle_scale*0.0021, e1=-0.0042780963, e2=0.0063780963)
+DL1A_5 = SBend(l=0.341678078229, angle=angle_scale*0.00155, e1=-0.0063780963, e2=0.0079280963)
+DL1E_1 = SBend(l=0.341678078229, angle=angle_scale*0.00155, e1=0.0079280963, e2=-0.0063780963)
+DL1E_2 = SBend(l=0.341678106809, angle=angle_scale*0.0021, e1=0.0063780963, e2=-0.0042780963)
+DL1E_3 = SBend(l=0.341678145898, angle=angle_scale*0.002675, e1=0.0042780963, e2=-0.0016030963)
+DL1E_4 = SBend(l=0.341678220925, angle=angle_scale*0.003525, e1=0.0016030963, e2=0.0019219037)
+DL1E_5 = SBend(l=0.341678557602, angle=angle_scale*0.0060061926, e1=-0.0019219037, e2=0.0079280963)
+DL2B_1 = SBend(l=0.341678078229, angle=angle_scale*0.00155, e1=0.0073530963, e2=-0.0058030963)
+DL2B_2 = SBend(l=0.341678106809, angle=angle_scale*0.0021, e1=0.0058030963, e2=-0.0037030963)
+DL2B_3 = SBend(l=0.341678145898, angle=angle_scale*0.002675, e1=0.0037030963, e2=-0.0010280963)
+DL2B_4 = SBend(l=0.341678220925, angle=angle_scale*0.003525, e1=0.0010280963, e2=0.0024969037)
+DL2B_5 = SBend(l=0.341678379762, angle=angle_scale*0.0048561926, e1=-0.0024969037, e2=0.0073530963)
+DL2D_1 = SBend(l=0.341678379762, angle=angle_scale*0.0048561926, e1=0.0073530963, e2=-0.0024969037)
+DL2D_2 = SBend(l=0.341678220925, angle=angle_scale*0.003525, e1=0.0024969037, e2=0.0010280963)
+DL2D_3 = SBend(l=0.341678145898, angle=angle_scale*0.002675, e1=-0.0010280963, e2=0.0037030963)
+DL2D_4 = SBend(l=0.341678106809, angle=angle_scale*0.0021, e1=-0.0037030963, e2=0.0058030963)
+DL2D_5 = SBend(l=0.341678078229, angle=angle_scale*0.00155, e1=-0.0058030963, e2=0.0073530963)
+DQ1 = SBend(l=0.982263725187, angle=angle_scale*0.0146, e1=0.0073, e2=0.0073, k1=-2.052562317341171)
+DQ2C_1 = SBend(l=0.382191187119, angle=angle_scale*0.003925, e1=0.003925, e2=0, k1=-1.628958018566645)
+DQ2C_2 = SBend(l=0.382191187119, angle=angle_scale*0.003925, e1=0, e2=0.003925, k1=-1.628958018566645)
+QD2= Quadrupole(l=0.202560809098, k1=-3.124609254255043,eid="QD2")
+QD3= Quadrupole(l=0.154787033367, k1=-2.919522005616164,eid="QD3")
+QD5= Quadrupole(l=0.202560809098, k1=-3.156575579596227)
+QF1= Quadrupole(l=0.281865276811, k1=2.906044501026788,eid="QF1")
+QF4A= Quadrupole(l=0.202560809098, k1=2.851945777628234,eid="QF4A")
+QF4B= Quadrupole(l=0.202560809098, k1=2.851945777628234)
+QF6= Quadrupole(l=0.37072449967, k1=4.949932443265761)
+QF8= Quadrupole(l=0.462450149073, k1=4.920906782172479)
+SD1A= Sextupole(l=0.158608935426, k2=-364.7764060877482)
+SD1B= Sextupole(l=0.158608935426, k2=-343.3640310505012)
+SD1D= Sextupole(l=0.158608935426, k2=-343.3640310505012)
+SD1E= Sextupole(l=0.158608935426, k2=-364.7764060877482)
+SF2AH= Sextupole(l=0.0955475514614, k2=358.2800409127136)
+SF2EH= Sextupole(l=0.0955475514614, k2=358.2800409127136)
+SH1A= Sextupole(l=0.0955475514614, k2=0)
+SH2B= Sextupole(l=0.0955475514614, k2=0)
+SH3E= Sextupole(l=0.0955475514614, k2=0)
+OF1B = Octupole(l=0.08599279631530001, k3=-51832.89885488881)
+OF1D= Octupole(l=0.08599279631530001, k3=-51832.89885488881)
+DR_01= Drift(l=2.53334777945)
+DR_02= Drift(l=0.0487292512453)
+DR_03= Drift(l=0.105102306608)
+DR_04= Drift(l=0.219759368361)
+DR_05= Drift(l=0.0449073491869)
+DR_06= Drift(l=0.0449073491869)
+DR_07= Drift(l=0.0716606635961)
+DR_08= Drift(l=0.520594115814)
+DR_09= Drift(l=0.0535066288184)
+DR_10= Drift(l=0.0716606635961)
+DR_11= Drift(l=0.0716606635961)
+DR_12= Drift(l=0.0573285320234)
+DR_13= Drift(l=0.0535066288184)
+DR_14= Drift(l=0.377272785468)
+DR_15= Drift(l=0.0716606635961)
+DR_16= Drift(l=0.0449073491869)
+DR_17= Drift(l=0.0898146983737)
+DR_18= Drift(l=0.0535066288184)
+DR_19= Drift(l=0.08599279631530001)
+DR_20= Drift(l=0.08599279631530001)
+DR_21= Drift(l=0.158608935426)
+DR_22= Drift(l=0.0353525940407)
+DR_23= Drift(l=0.0535066288184)
+DR_24= Drift(l=0.0535066288184)
+DR_25= Drift(l=0.289509080928)
+DR_26= Drift(l=0.08599279631530001)
+DR_27= Drift(l=0.08599279631530001)
+DR_28= Drift(l=0.0535066288184)
+DR_29= Drift(l=0.0898146983737)
+DR_30= Drift(l=0.0449073491869)
+DR_31= Drift(l=0.0716606635961)
+DR_32= Drift(l=0.377272785468)
+DR_33= Drift(l=0.0535066288184)
+DR_34= Drift(l=0.0573285308768)
+DR_35= Drift(l=0.0716606635961)
+DR_36= Drift(l=0.0716606635961)
+DR_37= Drift(l=0.0535066288184)
+DR_38= Drift(l=0.520594115814)
+DR_39= Drift(l=0.0716606635961)
+DR_40= Drift(l=0.0449073491869)
+DR_41= Drift(l=0.0449073491869)
+DR_42= Drift(l=0.219759368361)
+DR_43= Drift(l=0.105102306608)
+DR_44= Drift(l=0.0487292512453)
+DR_45= Drift(l=2.53334777945)
+BPM_01 = Monitor()
+BPM_02 = Monitor()
+BPM_03 = Monitor()
+BPM_04 = Monitor()
+BPM_05 = Monitor()
+BPM_06 = Monitor()
+BPM_07 = Monitor()
+BPM_08 = Monitor()
+BPM_09 = Monitor()
+BPM_10 = Monitor()
+CELLCENTER = Marker()
+DISPBUMPCENTER = Marker()
+IDMARKER = Marker()
+SF2AMARKER = Marker()
+SF2EMARKER = Marker()
+
+DR_00 = Drift(l=0.2)
+
+fp1 = Marker(eid="fp1")
+
+cellB = (QF1,DR_03,SH1A,DR_04,
+QD2,DR_05,DL1A_1,DL1A_2,DL1A_3,DL1A_4,DL1A_5,DR_06,QD3,DR_07, fp1, SD1A,DR_08,BPM_02,
+DR_09,QF4A,DR_10,DISPBUMPCENTER,SF2AH,SF2AMARKER,SF2AH,DR_11,QF4B,DR_12,OF1B,DR_13,
+BPM_03,DR_14,SD1B,DR_15,QD5,DR_16,DL2B_1,DL2B_2,DL2B_3,DL2B_4,DL2B_5,DR_17,BPM_04,
+DR_18,QF6,DR_19,DQ1,DR_20,QF8,DR_21,SH2B,DR_22,BPM_05,DR_23,DQ2C_1,CELLCENTER,
+DQ2C_2,DR_24,BPM_06,DR_25,QF8,DR_26,DQ1,DR_27,QF6,DR_28,BPM_07,DR_29,DL2D_1,DL2D_2,DL2D_3,DL2D_4,DL2D_5,DR_30,QD5,DR_31,SD1D,DR_32,BPM_08,DR_33,OF1D,DR_34,
+QF4A,DR_35,DISPBUMPCENTER,SF2EH,SF2EMARKER,SF2EH,DR_36,QF4A,DR_37,BPM_09,DR_38,
+SD1E,DR_39,QD3,DR_40,DL1E_1,DL1E_2,DL1E_3,DL1E_4,DL1E_5,DR_41,QD2,DR_42,SH3E,
+DR_43,QF1)
+
+
+QF1.k1= 2.5677519051
+QD2.k1= -2.45314639466
+QD3.k1= -2.93015115499
+QF4A.k1= 2.85077124469
+
+beam = Beam()
+beam.E = 6.0
+lat = MagneticLattice( cellB )
+tws=twiss(lat, Twiss(), nPoints=1000)
+
+constr = {fp1:{'beta_x':3.03, 'beta_y':15.65,'alpha_x':-3.04,'alpha_y':7.10}, 'periodic': True}
+vars = [QF1, QD2,QD3,QF4A]
+
+#match(lat, constr, vars, Twiss(beam), max_iter=10000)
+
+for v in vars:
+    print "{}.k1= {}".format(v.id, v.k1)
+
+
+
+tws=twiss(lat, Twiss(), nPoints=1000)
+dqx, dqy = natural_chromaticity(lat, tws[0])
+dqxc, dqyc = chromaticity(lat, tws[0])
+print 'chrom natural:',dqx, dqy
+print 'chrom:',dqxc, dqyc
+
+
+eb = EbeamParams(lat, beam, nsuperperiod=1)
+print("emittance : {} pm".format(eb.emittance * 1.e12))
+print(tws[-1])
+
+
+ang = 0.0
+for e in lat.sequence:
+    if e.__class__ in (SBend, Bend):
+        ang += e.angle
+
+print 'angle:', ang*180. / pi
+
+
+plot_opt_func(lat, tws, legend = False)
+plt.show()

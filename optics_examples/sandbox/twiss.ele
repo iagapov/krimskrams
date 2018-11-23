@@ -1,0 +1,33 @@
+! to run: elegant twiss.ele  -macro=lattice=fodo
+! calculation of Twiss parameters
+
+&global_settings
+	echo_namelists = 1,
+	log_file=twiss.log,
+&end
+
+&run_setup
+    lattice = "<lattice>.lte",
+		magnets = "<lattice>.mag",
+    p_central_mev = 6000.0,
+	  use_beamline = RING,
+   	default_order = 2,
+  	random_number_seed = 0,
+		echo_lattice=1,
+&end
+
+&run_control
+  n_steps = 1,
+ 	n_passes = 1
+&end
+
+! Compute twiss parameters
+&twiss_output
+    filename = "<lattice>.twi",
+		radiation_integrals = 1,  ! needed for RF setup
+    matched = 1,
+		higher_order_chromaticity = 1,
+		compute_driving_terms = 1,
+		leading_order_driving_terms_only = 1,
+		s_dependent_driving_terms_file = driving_terms.out,
+&end

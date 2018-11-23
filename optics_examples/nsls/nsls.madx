@@ -1,0 +1,63 @@
+! nsls-I madx file, adapted from s.y.lee accelerator physics
+! the resultiong emittance is in some disagreement (100 nm vs 90 nm)
+! compared to what is cited in literature
+! e.g. https://www.bnl.gov/isd/documents/22225.pdf
+
+title, "nlsl x-ray ring";
+q1 : quadrupole, l=0.45, k1=-1.50186576;
+q2 : quadrupole, l=0.8, k1=1.33731236;
+q3 : quadrupole, l=0.4132, k1=-1.40118946;
+q4 : quadrupole, l=0.225, k1=1.29943942;
+b: rbend, l=2.7, k1=-0.026848954, angle=0.39269908;
+
+!sf : sextupole, l=0.0, k2=0.0;
+!sd : sextupole, l=0.0, k2=0.0;
+
+msf = 0.0;
+msd = 0.0;
+
+sf: multipole, knl:={0.0, 0.0, msf};
+sd: multipole, knl:={0.0, 0.0, msd};
+
+d1: drift, l=2.25;
+d2: drift, l=0.685;
+d3: drift, l=0.3484;
+d4: drift, l=0.70825;
+d5: drift, l=0.9;
+d6: drift, l=0.25;
+hsup : line = (d1,q1,d2,q2,d3,q3,d4,b,d5,sd,d5,sf,d6,q4);
+cell : line = (hsup,-hsup) ;
+ring: line =(8*(hsup,-hsup));
+
+beam, energy=2.584, particle=electron;
+use, period=cell;
+
+
+chrom : macro {
+  use, period=cell;
+  twiss, chrom;
+  chrom.dq1 = table(summ, dq1);
+  chrom.dq2 = table(summ, dq2);
+};
+
+match, use_macro;
+use_macro,name=chrom;
+vary, name = msf, step=1.e-6;
+vary, name = msd, step=1.e-6;
+constraint,expr= chrom.dq1=0.0;
+constraint,expr= chrom.dq2=0.0;
+lmdif, calls=5000;
+endmatch;
+
+value, msf;
+value, msd;
+
+twiss, chrom;
+
+! natural hor. emittance in nm rad
+value, table(summ, synch_5);
+emit_x = (beam->gamma)^2 * 3.83e-4 * table(summ, synch_5) / ( table(summ, synch_2) - table(summ, synch_4) ) ;
+value, emit_x;
+
+
+plot, haxis=s, vaxis1=betx, bety, vmin=0., vaxis2 = Dx, colour=100, interpolate=true;

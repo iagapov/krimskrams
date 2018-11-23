@@ -1,0 +1,141 @@
+! z:\users\simon\documents\work\opa\opa-177\lattices\20090901-411-4pmdw.opa
+
+str0500    : drift, l = 0.5
+str0450    : drift, l = 0.45
+strx403    : drift, l = 0.40311
+str0400    : drift, l = 0.4
+str0302    : drift, l = 0.302
+strx203    : drift, l = 0.20311
+strx113    : drift, l = 0.11268
+str0100    : drift, l = 0.1
+str0075    : drift, l = 0.075
+str0050    : drift, l = 0.05
+str0025    : drift, l = 0.025
+strx013    : drift, l = 0.0125
+str0010    : drift, l = 0.01
+strx006    : drift, l = 0.00608
+
+
+qf         : quadrupole, l = 0.15, k1 = 4.031557
+qfm        : quadrupole, l = 0.15, k1 = 3.776598
+qfend      : quadrupole, l = 0.25, k1 = 3.521817
+qdend      : quadrupole, l = 0.25, k1 = -2.176206
+qfendw     : quadrupole, l = 0.25, k1 = 3.647797
+qdendw     : quadrupole, l = 0.25, k1 = -2.513862
+
+d0         : sbend, l = 0.36189, angle = 0.018948516,e1 = 0,&
+             e2 = 0, k1 = -0.862608, hgap = 0, fint = 0
+
+df1        : sbend, l = 0.05, angle = 0.0026169467,e1 = 0,&
+             e2 = 0, k1 = -0.86222, hgap = 0, fint = 0
+
+df2        : sbend, l = 0.05, angle = 0.0026125834,e1 = 0,&
+             e2 = 0, k1 = -0.861475, hgap = 0, fint = 0
+
+df3        : sbend, l = 0.05, angle = 0.0018819885,e1 = 0,&
+             e2 = 0, k1 = -0.588419, hgap = 0, fint = 0
+
+df4        : sbend, l = 0.05, angle = 9.3375115e-5,e1 = 0,&
+             e2 = 0, k1 = 0.006391, hgap = 0, fint = 0
+
+df5        : sbend, l = 0.05, angle = 2.687807e-5,e1 = 0,&
+             e2 = 0, k1 = 0.00012, hgap = 0, fint = 0
+
+dm6        : sbend, l = 0.05, angle = 3.8746309e-5,e1 = 0,&
+             e2 = 0, k1 = -0.000513, hgap = 0, fint = 0
+
+dm5        : sbend, l = 0.05, angle = 0.00093479835,e1 = 0,&
+             e2 = 0, k1 = -0.291281, hgap = 0, fint = 0
+
+dm4        : sbend, l = 0.05, angle = 0.0012960815,e1 = 0,&
+             e2 = 0, k1 = -0.420684, hgap = 0, fint = 0
+
+dm3        : sbend, l = 0.05, angle = 0.0013477432,e1 = 0,&
+             e2 = 0, k1 = -0.427128, hgap = 0, fint = 0
+
+dm2        : sbend, l = 0.05, angle = 0.0020333086,e1 = 0,&
+             e2 = 0, k1 = -0.604213, hgap = 0, fint = 0
+
+dm1        : sbend, l = 0.05, angle = 0.0026035076,e1 = 0,&
+             e2 = 0, k1 = -0.850553, hgap = 0, fint = 0
+
+dm0        : sbend, l = 0.20424, angle = 0.010693981,e1 = 0,&
+             e2 = 0, k1 = -0.861122, hgap = 0, fint = 0
+
+
+sd         : sextupole, l = 0.1, k2 = -232.57042
+sdend      : sextupole, l = 0.1, k2 = -284
+sfm        : sextupole, l = 0.1, k2 = 312
+sfo        : sextupole, l = 0.1, k2 = 340
+sfi        : sextupole, l = 0.1, k2 = 433.78315
+
+
+pmdw       : cwiggler, l = 2, BY_MAX=2.22,periods=25,sinusoidal=1
+! *** undulator pmdw: converted to drift.
+
+
+
+
+
+
+oxxo       : mult,order=3,KNL="-135.5801 6 *"
+oxyo       : mult,order=3,KNL="216.2628 6 *"
+oyyo       : mult,order=3,KNL="-85.5096 6 *"
+
+
+
+
+!oxxo       : multipole, lrad=0, knl={0,0,0,-813.4806}
+!oxyo       : multipole, lrad=0, knl={0,0,0,1297.5768}
+!oyyo       : multipole, lrad=0, knl={0,0,0,-513.0576}
+
+
+
+mon        : monitor, l=0
+
+ch         : hkicker, l=0
+
+cv         : vkicker, l=0
+
+{----- table of segments ----------------------------------------------------}
+
+dip         : line=(df5, df4, df3, df2, df1, d0) 
+dipm        : line=(dm6, dm5, dm4, dm3, dm2, dm1, dm0, df1, df2, &
+             df3, df4, df5)
+dipuc       : line=(sd, str0010, dip, -dip, str0010, sd)
+oxx         : line=(str0050, oxxo, str0050)
+oxy         : line=(str0050, oxyo, str0050)
+oyy         : line=(str0050, oyyo, str0050)
+bpm         : line=(str0025, mon, str0025)
+corr        : line=(str0050, ch, cv, str0050)
+sqfm        : line=(qfm, str0075, sfm, strx013, bpm, strx013, qfm, &
+             str0100, corr)
+sqfo        : line=(qf, str0075, sfo, strx013, bpm, strx013, qf, &
+             str0100, corr)
+sqfi        : line=(qf, str0075, sfi, strx013, bpm, strx013, qf, &
+             str0100, corr)
+longstr     : line=(4*str0500, str0400)
+wlongstr    : line=(2*str0500, str0400)
+shortstr    : line=(str0450, str0500, str0302)
+uc1         : line=(sqfm, strx203, dipuc, strx403)
+uc2         : line=(sqfo, strx203, dipuc, strx403)
+uc3         : line=(sqfi, strx203, dipuc, strx203)
+uc4         : line=(-sqfi, strx403, dipuc, strx203)
+uc5         : line=(-sqfo, strx403, dipuc, strx203, -sqfm)
+mc          : line=(bpm, corr, oxx, str0025, qfend, str0025, oxy, &
+             str0100, qdend, strx006, dipm, oyy, strx113, corr, &
+             bpm, sdend, str0050)
+wmc         : line=(bpm, corr, oxx, str0025, qfendw, str0025, oxy, &
+             str0100, qdendw, strx006, dipm, oyy, strx113, corr, &
+             bpm, sdend, str0050)
+onesp        : line=(longstr, mc, shortstr, uc1, uc2, uc3, uc4, &
+             uc5, -shortstr, -mc, -longstr)
+wline       : line=(longstr, mc, shortstr, uc1, uc2, uc3, uc4, &
+             uc5, -shortstr, -wmc, -wlongstr)
+wlines      : line=(wline, pmdw, -wline)
+wring       : line=(wlines, 3*onesp, wlines, 3*onesp, wlines, 3*onesp, &
+             wlines, 3*onesp)
+wringper    : line=(wlines, 3*onesp)
+ring: line = (wringper)
+
+use, ring

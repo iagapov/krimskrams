@@ -1,0 +1,47 @@
+! to run: elegant align1.ele  -macro=lattice=fodo,seeds=10,seednum=6148677645
+! error assignment and twiss
+! working from /c/workspace/elegant_examples/NSLS-II-GirderMisalignment
+
+
+&global_settings
+	echo_namelists = 1,
+	log_file=out.log,
+&end
+
+&run_setup
+    lattice = "<lattice>.lte",
+		magnets = "<lattice>.mag",
+    p_central_mev = 6000.0,
+	  use_beamline = RING,
+   	default_order = 2,
+  	random_number_seed = <seednum>,
+		echo_lattice=1,
+		parameters=%s.param
+&end
+
+&run_control
+  n_steps=<seeds>,
+&end
+
+&error_control clear_error_settings=1 &end
+
+&error_element name=Q*, item=DX, element_type=*QUAD*, amplitude=500.e-6, cutoff=3, bind=0, after=EC1, before=EC2 &end
+&error_element name=Q*, item=DY, element_type=*QUAD*, amplitude=500.e-6, cutoff=3, bind=0, after=EC1, before=EC2 &end
+&error_element name=S*, item=DX, element_type=*SEXT*, amplitude=100.e-6, cutoff=3, bind=0, after=EC1, before=EC2 &end
+&error_element name=S*, item=DY, element_type=*SEXT*, amplitude=100.e-6, cutoff=3, bind=0, after=EC1, before=EC2 &end
+
+&error_element name=Q*, item=DX, element_type=*QUAD*, amplitude=900.e-6, cutoff=3, bind=0, after=EC2, before=EC3 &end
+&error_element name=Q*, item=DY, element_type=*QUAD*, amplitude=900.e-6, cutoff=3, bind=0, after=EC2, before=EC3 &end
+&error_element name=S*, item=DX, element_type=*SEXT*, amplitude=400.e-6, cutoff=3, bind=0, after=EC2, before=EC3 &end
+&error_element name=S*, item=DY, element_type=*SEXT*, amplitude=400.e-6, cutoff=3, bind=0, after=EC2, before=EC3 &end
+
+
+&twiss_output
+    filename = "%s.twi",
+    matched = 1,
+		radiation_integrals=1,
+&end
+
+&bunched_beam &end
+
+&track &end

@@ -1,0 +1,47 @@
+
+! to run: elegant da.ele  -macro=lattice=fodo,seeds=10,seednum=6148677645
+! DA and MA calculation
+
+
+&global_settings
+	echo_namelists = 1,
+	log_file=out.log,
+&end
+
+&run_setup
+    lattice = "<lattice>.lte",
+		magnets = "<lattice>.mag",
+    p_central_mev = 6000.0,
+	  use_beamline = RING,
+   	default_order = 2,
+  	random_number_seed = <seednum>,
+		echo_lattice=1,
+		parameters=%s.param
+&end
+
+&load_parameters
+    filename_list = "align3.param",
+		allow_missing_elements = 1
+&end
+
+&run_control
+  n_steps=<seeds>,
+&end
+
+
+&twiss_output
+    filename = "%s.twi",
+    matched = 1,
+		radiation_integrals=1,
+&end
+
+&find_aperture
+        output = %s.aper
+        mode = "n-lines",
+        xmax = 0.4
+        ymax = 0.4
+        nx = 51,
+        n_splits = 5,
+        split_fraction = 0.2
+        n_lines = 31
+&end

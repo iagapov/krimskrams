@@ -1,0 +1,539 @@
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&run_setup
+    lattice = fodo.lte,
+    use_beamline = RING,
+    rootname = {NULL},
+    output = {NULL},
+    centroid = {NULL},
+    sigma = {NULL},
+    final = {NULL},
+    acceptance = {NULL},
+    losses = {NULL},
+    magnets = fodo.mag,
+    semaphore_file = {NULL},
+    parameters = %s.param,
+    combine_bunch_statistics = 0,
+    wrap_around = 1,
+    final_pass = 0,
+    default_order = 2,
+    concat_order = 0,
+    print_statistics = 0,
+    show_element_timing = 0,
+    monitor_memory_usage = 0,
+    random_number_seed = 12567,
+    correction_iterations = 1,
+    echo_lattice = 1,
+    p_central = 0.000000000000000e+00,
+    p_central_mev = 6.000000000000000e+03,
+    always_change_p0 = 0,
+    load_balancing_on = 0,
+    random_sequence_No = 1,
+    expand_for = {NULL},
+    tracking_updates = 1,
+    search_path = {NULL},
+    element_divisions = 0,
+&end
+Seeding random number generators
+reading from file fodo.lte
+QAP:MAXAMP,X_MAX=0.01,Y_MAX=0.01,ELLIPTICAL=1;
+
+QF:QUADRUPOLE,L=0.1,K1=3.3,GROUP=GIRDER2
+QD:QUADRUPOLE,L=0.1,K1=-3.3,GROUP=GIRDER3
+D:EDRIFT,L=2.0
+B:CSBEND,L=1.0,ANGLE=0.01,GROUP=GIRDER1
+DD:EDRIFT,L=0.5
+
+SF:SEXTUPOLE,L=0.05,K2=100,GROUP=GIRDER2
+SD:SEXTUPOLE,L=0.05,K2=-100,GROUP=GIRDER3
+
+"DW:FP":MARK,FITPOINT=1
+
+P1:MONI
+P2:MONI
+
+C1XY:KICKER,L=0.01
+C2XY:KICKER,L=0.01
+
+CELL:LINE=(DD,B,DD,QAP,P1,QF,SF,C1XY,DD,B,DD,QAP,P2,QD,SD,C2XY)
+
+RFC:RFCA,VOLT=6000000,PHASE=10.0,FREQ=2.998E7/33.6,CHANGE_T=0
+
+DW:WIGGLER,L=1.0,POLES=20,B=1.001
+
+MALIN:MALIGN
+
+"EC1":MARK
+"EC2":MARK
+"EC3":MARK
+
+
+RING:LINE=(MALIN,EC1,CELL,EC2,CELL,EC3,CELL,RFC)
+RINGT:LINE=(MALIN,EC1,CELL,EC2,CELL,EC3,CELL,RFC,P1)
+finished reading from files
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+Beginning organization of lattice input data.
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+Step 1 done.
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+Added MALIN to hash table
+Added EC1 to hash table
+Added DD to hash table
+Added B to hash table
+Added QAP to hash table
+Added P1 to hash table
+Added QF to hash table
+Added SF to hash table
+Added C1XY to hash table
+Added P2 to hash table
+Added QD to hash table
+Added SD to hash table
+Added C2XY to hash table
+Added EC2 to hash table
+Added EC3 to hash table
+Added RFC to hash table
+Created occurence hash table for 16 unique elements of 53 total elements
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+Step 2 done.
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+Step 3 done.
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+Step 4 done.
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+length of beamline RING per pass: 1.296000000000000e+01 m
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&run_control
+    n_steps = 10,
+    bunch_frequency = 0.000000000000000e+00,
+    n_indices = 0,
+    n_passes = 1,
+    n_passes_fiducial = 0,
+    reset_rf_for_each_step = 1,
+    first_is_fiducial = 0,
+    restrict_fiducialization = 0,
+    reset_scattering_seed = 0,
+&end
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error_control
+    clear_error_settings = 1,
+    summarize_error_settings = 0,
+    error_log = {NULL},
+    no_errors_for_first_step = 0,
+    error_factor = 1.000000000000000e+00,
+&end
+
+*** Cleared error settings
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = Q*,
+    exclude = {NULL},
+    item = DX,
+    element_type = *QUAD*,
+    type = gaussian,
+    amplitude = 5.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC2,
+    after = EC1,
+&end
+EC1 found at s = 0.000000e+00 m
+EC2 found at s = 4.320000e+00 m
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = Q*,
+    exclude = {NULL},
+    item = DY,
+    element_type = *QUAD*,
+    type = gaussian,
+    amplitude = 5.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC2,
+    after = EC1,
+&end
+EC1 found at s = 0.000000e+00 m
+EC2 found at s = 4.320000e+00 m
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = S*,
+    exclude = {NULL},
+    item = DX,
+    element_type = *SEXT*,
+    type = gaussian,
+    amplitude = 1.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC2,
+    after = EC1,
+&end
+EC1 found at s = 0.000000e+00 m
+EC2 found at s = 4.320000e+00 m
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = S*,
+    exclude = {NULL},
+    item = DY,
+    element_type = *SEXT*,
+    type = gaussian,
+    amplitude = 1.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC2,
+    after = EC1,
+&end
+EC1 found at s = 0.000000e+00 m
+EC2 found at s = 4.320000e+00 m
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = Q*,
+    exclude = {NULL},
+    item = DX,
+    element_type = *QUAD*,
+    type = gaussian,
+    amplitude = 9.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC3,
+    after = EC2,
+&end
+EC2 found at s = 4.320000e+00 m
+EC3 found at s = 8.640000e+00 m
+*** warning: you've specified errors for QF.DX more than once!
+*** warning: you've specified errors for QD.DX more than once!
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = Q*,
+    exclude = {NULL},
+    item = DY,
+    element_type = *QUAD*,
+    type = gaussian,
+    amplitude = 9.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC3,
+    after = EC2,
+&end
+EC2 found at s = 4.320000e+00 m
+EC3 found at s = 8.640000e+00 m
+*** warning: you've specified errors for QF.DY more than once!
+*** warning: you've specified errors for QD.DY more than once!
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = S*,
+    exclude = {NULL},
+    item = DX,
+    element_type = *SEXT*,
+    type = gaussian,
+    amplitude = 4.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC3,
+    after = EC2,
+&end
+EC2 found at s = 4.320000e+00 m
+EC3 found at s = 8.640000e+00 m
+*** warning: you've specified errors for SF.DX more than once!
+*** warning: you've specified errors for SD.DX more than once!
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&error
+    name = S*,
+    exclude = {NULL},
+    item = DY,
+    element_type = *SEXT*,
+    type = gaussian,
+    amplitude = 4.000000000000000e-04,
+    cutoff = 3.000000000000000e+00,
+    bind = 0,
+    bind_number = 0,
+    bind_across_names = 0,
+    fractional = 0,
+    post_correction = 0,
+    additive = 1,
+    allow_missing_elements = 0,
+    before = EC3,
+    after = EC2,
+&end
+EC2 found at s = 4.320000e+00 m
+EC3 found at s = 8.640000e+00 m
+*** warning: you've specified errors for SF.DY more than once!
+*** warning: you've specified errors for SD.DY more than once!
+statistics:    ET:     00:00:00 CP:    0.00 BIO:0 DIO:0 PF:0 MEM:0
+&twiss_output
+    filename = %s.twi,
+    matched = 1,
+    output_at_each_step = 0,
+    output_before_tune_correction = 0,
+    final_values_only = 0,
+    statistics = 0,
+    radiation_integrals = 1,
+    beta_x = 1.000000000000000e+00,
+    alpha_x = 0.000000000000000e+00,
+    eta_x = 0.000000000000000e+00,
+    etap_x = 0.000000000000000e+00,
+    beta_y = 1.000000000000000e+00,
+    alpha_y = 0.000000000000000e+00,
+    eta_y = 0.000000000000000e+00,
+    etap_y = 0.000000000000000e+00,
+    reference_file = {NULL},
+    reference_element = {NULL},
+    reference_element_occurrence = 0,
+    reflect_reference_values = 0,
+    concat_order = 3,
+    higher_order_chromaticity = 0,
+    higher_order_chromaticity_points = 5,
+    higher_order_chromaticity_range = 4.000000000000000e-04,
+    quick_higher_order_chromaticity = 0,
+    chromatic_tune_spread_half_range = 0.000000000000000e+00,
+    cavities_are_drifts_if_matched = 1,
+    compute_driving_terms = 0,
+    leading_order_driving_terms_only = 0,
+    s_dependent_driving_terms_file = {NULL},
+    local_dispersion = 1,
+    n_periods = 1,
+&end
+44 matrices recomputed for periodic Twiss parameter computation
+statistics:    ET:     00:00:00 CP:    0.01 BIO:0 DIO:0 PF:0 MEM:0
+periodic Twiss parameters (chromaticity valid for fully second-order calculation only!):
+         beta          alpha           nu           eta          eta'       dnu/d(dp/p)   dbeta/(dp/p)     accept.
+          m                          1/2pi           m                         1/2pi            m          mm-mrad
+--------------------------------------------------------------------------------------------------------------------
+  x:  4.399110e+00 -7.422265e-01  3.426230e-01  1.467614e-01  2.404937e-02  1.005348e+00 -1.557313e+01  1.139372e+01
+  y:  8.611805e+00  1.426595e+00  3.423268e-01  0.000000e+00  0.000000e+00  1.002690e-01  2.902755e+00  1.138399e+01
+x acceptance limited to 1.139372e-05 by DD ending at 6.320000e+00 m
+y acceptance limited to 1.138399e-05 by DD ending at 1.280000e+01 m
+statistics:    ET:     00:00:00 CP:    0.02 BIO:0 DIO:0 PF:0 MEM:0
+&bunched_beam
+    bunch = {NULL},
+    n_particles_per_bunch = 1,
+    time_start = 0.000000000000000e+00,
+    matched_to_cell = {NULL},
+    emit_x = 0.000000000000000e+00,
+    emit_nx = 0.000000000000000e+00,
+    beta_x = 1.000000000000000e+00,
+    alpha_x = 0.000000000000000e+00,
+    eta_x = 0.000000000000000e+00,
+    etap_x = 0.000000000000000e+00,
+    emit_y = 0.000000000000000e+00,
+    emit_ny = 0.000000000000000e+00,
+    beta_y = 1.000000000000000e+00,
+    alpha_y = 0.000000000000000e+00,
+    eta_y = 0.000000000000000e+00,
+    etap_y = 0.000000000000000e+00,
+    use_twiss_command_values = 0,
+    Po = 1.174170457378141e+04,
+    sigma_dp = 0.000000000000000e+00,
+    sigma_s = 0.000000000000000e+00,
+    dp_s_coupling = 0.000000000000000e+00,
+    emit_z = 0.000000000000000e+00,
+    beta_z = 0.000000000000000e+00,
+    alpha_z = 0.000000000000000e+00,
+    momentum_chirp = 0.000000000000000e+00,
+    one_random_bunch = 1,
+    save_initial_coordinates = 1,
+    limit_invariants = 0,
+    symmetrize = 0,
+    halton_sequence[0] = 0, 0, 0,
+    halton_radix[0] = 0, 0, 0, 0, 0, 0,
+    optimized_halton = 0,
+    randomize_order[0] = 0, 0, 0,
+    limit_in_4d = 0,
+    enforce_rms_values[0] = 0, 0, 0,
+    distribution_cutoff[0] = 2.000000000000000e+00, 2.000000000000000e+00, 2.000000000000000e+00,
+    distribution_type[0] = gaussian, gaussian, gaussian,
+    centroid[0] = 0.000000000000000e+00, 0.000000000000000e+00, 0.000000000000000e+00, 0.000000000000000e+00, 
+        0.000000000000000e+00, 0.000000000000000e+00,
+    first_is_fiducial = 0,
+&end
+statistics:    ET:     00:00:00 CP:    0.02 BIO:0 DIO:0 PF:0 MEM:0
+&track
+    center_on_orbit = 0,
+    center_momentum_also = 1,
+    offset_by_orbit = 0,
+    offset_momentum_also = 1,
+    soft_failure = 1,
+    use_linear_chromatic_matrix = 0,
+    longitudinal_ring_only = 0,
+    ibs_only = 0,
+    stop_tracking_particle_limit = -1,
+&end
+12 matrices (re)computed
+tracking step 1.0
+generating bunch 1.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+96 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.03 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 2.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+192 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.05 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 3.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+288 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.06 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 4.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+384 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.07 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 5.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+480 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.09 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 6.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+576 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.09 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 7.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+672 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.10 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 8.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+768 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.11 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 9.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+864 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:00 CP:    0.12 BIO:0 DIO:0 PF:0 MEM:0
+
+
+12 matrices (re)computed
+tracking step 10.0
+0 matrices (re)computed after correction
+tracking 1 particles
+27 Aug 18 09:57:53: This step establishes energy profile vs s (fiducial beam).
+27 Aug 18 09:57:53: Rf phases/references reset.
+1 particles transmitted, total effort of 1 particle-turns
+960 multipole kicks done
+
+Post-tracking output completed.
+Tracking step completed   ET:     00:00:01 CP:    0.12 BIO:0 DIO:0 PF:0 MEM:0
+
+
+Finished tracking.
+End of input data encountered.
+statistics:    ET:     00:00:01 CP:    0.13 BIO:0 DIO:0 PF:0 MEM:0
+=====================================================================================
+Thanks for using elegant.  Please cite the following reference in your publications:
+  M. Borland, "elegant: A Flexible SDDS-Compliant Code for Accelerator Simulation,"
+  Advanced Photon Source LS-287, September 2000.
+If you use a modified version, please indicate this in all publications.
+=====================================================================================

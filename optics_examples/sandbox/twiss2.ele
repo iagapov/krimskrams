@@ -1,0 +1,145 @@
+! to run: elegant twiss.ele  -macro=lattice=fodo
+
+! Twiss parameters
+
+&global_settings
+	echo_namelists = 0
+&end
+
+&run_setup
+    lattice = "<lattice>.lte",
+    p_central_mev = 6000.0,
+    use_beamline = RING,
+    default_order = 2,
+    random_number_seed = 0
+&end
+
+&run_control
+    reset_rf_for_each_step = 1,
+    n_steps = 1,
+    n_passes = 1
+&end
+
+
+! Compute twiss parameters
+&twiss_output
+    filename = "<lattice>-old.twi",
+    radiation_integrals = 1,  ! needed for RF setup
+    matched = 1,
+&end
+
+
+&optimization_setup
+       mode = "minimize", method = "simplex", target = 1e-8,
+       tolerance = 1e-16, n_passes = 3, n_evaluations = 250, log_file = /dev/tty,
+       n_restarts = 10,
+       verbose = 0, output_sparsing_factor = 10
+&end
+
+
+&optimization_term
+        term = "DW:FP#1.betax 8.0 .1 sene",
+        weight= 1
+&end
+
+&optimization_term
+        term = "nux 0.7 .001 sene",
+        weight= 1
+&end
+
+&optimization_variable
+        name = QF, item=K1, lower_limit=0, upper_limit=5, step_size = 1e-2 &end
+&optimization_variable
+        name = QD, item=K1, lower_limit=-5, upper_limit=0, step_size = 1e-2
+&end
+
+
+&bunched_beam
+&end
+
+&optimize summarize_setup=1 &end
+
+&save_lattice filename = <lattice>-new.lte &end
+
+&run_setup
+    lattice = <lattice>-new.lte
+    p_central_mev = 6000.0,
+    use_beamline = RING,
+    default_order = 2,
+    random_number_seed = 0
+&end
+
+
+! Compute twiss parameters
+&twiss_output
+    filename = "<lattice>-new.twi",
+    radiation_integrals = 1,  ! needed for RF setup
+    matched = 1,
+&end
+
+!&stop &end
+
+!****************************************
+
+&run_setup
+    lattice = <lattice>-new.lte
+    p_central_mev = 6000.0,
+    use_beamline = RING,
+    default_order = 2,
+    random_number_seed = 0
+&end
+
+&run_control
+!    reset_rf_for_each_step = 1,
+    n_steps = 1,
+    n_passes = 1
+&end
+
+&optimization_setup
+       mode = "minimize", method = "simplex", target = 1e-8,
+       tolerance = 1e-16, n_passes = 3, n_evaluations = 250, log_file = /dev/tty,
+       n_restarts = 10,
+       verbose = 0, output_sparsing_factor = 10
+&end
+
+&optimization_term
+        term = "dnux/dp 3.0 .1 sene",
+        weight= 1
+&end
+
+&optimization_term
+        term = "dnuy/dp 3.0 .1 sene",
+        weight= 1
+&end
+
+
+&optimization_variable
+        name = SF, item=K2, lower_limit=0, upper_limit=100, step_size = 1e-2
+&end
+&optimization_variable
+        name = SD, item=K2, lower_limit=-100, upper_limit=0, step_size = 1e-2
+&end
+
+
+&bunched_beam
+&end
+
+&optimize summarize_setup=1 &end
+
+&save_lattice filename = <lattice>-new2.lte &end
+
+&run_setup
+    lattice = <lattice>-new2.lte
+    p_central_mev = 6000.0,
+    use_beamline = RING,
+    default_order = 2,
+    random_number_seed = 0
+&end
+
+
+! Compute twiss parameters
+&twiss_output
+    filename = "<lattice>-new2.twi",
+    radiation_integrals = 1,  ! needed for RF setup
+    matched = 1,
+&end

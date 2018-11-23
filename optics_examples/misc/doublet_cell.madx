@@ -1,0 +1,19 @@
+d1 : drift, l=1.0;
+d2 : drift, l=0.5;
+d3 : drift, l=1.0;
+
+q1 : quadrupole, l=0.1, k1=2.2;
+q2 : quadrupole, l=0.1, k1=-2.21;
+
+cell : line = (d1,q1,d2,q2,d3);
+
+beam, particle=electron, energy=42.0;
+use, period=cell;
+twiss, chrom;
+plot, haxis=s, vaxis1=betx, bety, vmin=0., vaxis2 = Dx, colour=100, interpolate=true;
+
+ncell : line = (3*cell);
+
+use, period=ncell;
+twiss, chrom;
+plot, haxis=s, vaxis1=betx, bety, vmin=0., vaxis2 = Dx, colour=100, interpolate=true;

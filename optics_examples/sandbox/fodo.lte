@@ -1,0 +1,36 @@
+qap: maxamp, x_max=0.01, y_max=0.01, elliptical=1;
+
+QF: QUADRUPOLE, L=0.1, K1=3.3, group=girder2
+QD: QUADRUPOLE, L=0.1, K1=-3.3, group=girder3
+D : EDRIFT, L=2.0
+B : CSBEND, L = 1.0, ANGLE = 0.01, group=girder1
+DD : EDRIFT, L = 0.5
+
+SF: SEXTUPOLE, L=0.05, K2=100, group=girder2
+SD: SEXTUPOLE, L=0.05, K2=-100, group=girder3
+
+"DW:FP" : MARK, FITPOINT=1
+
+P1: moni
+P2: moni
+
+C1XY: kicker, l=0.01
+C2XY: kicker, l=0.01
+
+CELL : LINE = (DD,B,DD,qap,p1,QF,SF,C1XY, DD,B,DD,qap, p2, QD, SD,C2XY  )
+
+RFC: RFCA,VOLT=6000000,PHASE=10.0,FREQ=2.998e7 / 33.6,CHANGE_T=0
+
+DW : WIGGLER, L=1.0, POLES=20, B=1.001
+!DW : EDRIFT, L=1.0
+
+!RING : LINE = (8*CELL, DD, DW, DD, QF, DD, DW, "DW:FP", DD, QD, RFC)
+malin: malign
+
+"EC1" : MARK
+"EC2" : MARK
+"EC3" : MARK
+
+
+RING : LINE = (malin,EC1, CELL,EC2,CELL, EC3, CELL, RFC)
+RINGT : LINE = (malin,EC1, CELL,EC2,CELL, EC3, CELL, RFC, P1)

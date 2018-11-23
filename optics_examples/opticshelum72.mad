@@ -1,0 +1,40 @@
+!option,-echo,-inter,-info,-warn
+
+dp = 0
+
+set, tunex, 54.218
+set, tuney, 51.315
+
+call,"mad/HELUM72.MAD"
+
+! Arbeitspunkt matchen
+ 
+cell, orbit, deltap=dp
+    vary, name=i_qe02[k1], step=0.01
+    vary, name=i_qe03[k1], step=0.01
+    constraint, range=#e, mux=tunex, muy=tuney
+    migrad, calls=5000
+endmatch
+
+beam, -radiate
+
+select,optics,class=rbend
+select,optics,class=sbend
+select,optics,class=quadrupole
+select,optics,class=sextupole
+select,optics,class=kicker
+select,optics,class=hkicker
+select,optics,class=vkicker
+select,optics,class=monitor
+select,optics,class=hmonitor
+select,optics,class=vmonitor
+select,optics,class=marker
+select,optics,class=instrument
+optics,centre,filename='optics_helum72.txt',deltap=dp,&
+columns=name,class,keyword,s,l,betx,bety,alfx,alfy,mux,muy,&
+x,y,dx,dy,dpx,dpy,k0l,k1l,k2l,ks0l,ks1l,ks2l,tilt,hkick,vkick
+
+
+save,"herae_matched.mad"
+
+stop

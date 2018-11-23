@@ -1,0 +1,53 @@
+! Twiss parameters
+
+&global_settings
+	echo_namelists = 0
+&end
+
+!-------------------------------------------------------------------------------
+! Turn on quantum excitation in dipoles, quads, and sextupoles
+! See p. 56 in elegant manual
+
+&run_setup
+    lattice = "latticeCollim.lte",
+    !magnets = "<optics>.mag",
+    p_central_mev = 6000.0,
+	use_beamline = s38,
+    ! the second-order is needed here only for the twiss computations.
+    ! the tracking is done with kick elements
+ 	default_order = 2,
+	random_number_seed = 0
+&end
+
+
+! &alter_elements name = *, type = CSBEND, item = ISR, value = 0, verbose = 0 &end
+! &alter_elements name = *, type = KQUAD,  item = ISR, value = 0, verbose = 0 &end
+! &alter_elements name = *, type = KSEXT,  item = ISR, value = 0, verbose = 0 &end
+
+! &alter_elements name = *, type = CSBEND, item = SYNCH_RAD, value = 1, verbose = 0 &end
+! &alter_elements name = *, type = KQUAD,  item = SYNCH_RAD, value = 1, verbose = 0 &end
+! &alter_elements name = *, type = KSEXT,  item = SYNCH_RAD, value = 1, verbose = 0 &end
+
+!&alter_elements name = *, type = CSBEND, item = SYNCH_RAD, value = 0, verbose = 0 &end
+!&alter_elements name = *, type = KQUAD,  item = SYNCH_RAD, value = 0, verbose = 0 &end
+!&alter_elements name = *, type = KSEXT,  item = SYNCH_RAD, value = 0, verbose = 0 &end
+
+! set up number of simulation steps
+&run_control
+	reset_rf_for_each_step = 1,
+    n_steps = 1,
+	n_passes = 1
+&end
+
+
+! Compute twiss parameters
+&twiss_output
+    filename = "apsu.twi",
+    matched = 1,
+    radiation_integrals = 1,  ! needed for RF setup
+	higher_order_chromaticity = 1,
+    statistics = 1,
+	compute_driving_terms = 1,
+!	leading_order_driving_terms_only = 1,
+	concat_order = 3,
+&end

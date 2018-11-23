@@ -1,0 +1,10 @@
+SDDS1
+!# little-endian
+&description text="many-particle aperture search--input: errors.ele  lattice: fodo.lte", contents="many-particle aperture search", &end
+&parameter name=Step, description="Simulation step", type=long, &end
+&parameter name=SVNVersion, description="SVN version number", type=string, fixed_value=23633M, &end
+&column name=x, symbol=x, units=m, type=double,  &end
+&column name=y, symbol=y, units=m, type=double,  &end
+&column name=xClipped, symbol=xClipped, units=m, type=double,  &end
+&column name=yClipped, symbol=yClipped, units=m, type=double,  &end
+&data mode=binary, &end

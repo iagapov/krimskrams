@@ -1,0 +1,48 @@
+
+qf : quadrupole, l=0.1, k1 = 2.0;
+qd : quadrupole, l=0.1, k1 = -2.0;
+d0 : drift, l = 0.5;
+b1 : sbend, l=1.0, angle=0.01;
+
+sf: sextupole, l=0.01, k2=300;
+sd: sextupole, l=0.01, k2=-100;
+
+cell : line = (d0,b1,d0,sf,qf,sf,d0,b1,d0,sd,qd,sd);
+
+ncell : line = (10*cell);
+
+beam, particle=electron, energy=1.0;
+use, period=cell;
+twiss, chrom;
+
+match, sequence = cell;
+constraint, sequence=cell, range=#e, mux = 1./9.;
+constraint, sequence=cell, range=#e, muy = 1./9.;
+vary, name=qf->k1, lower=-20, upper=20, step=1.e-6;
+vary, name=qd->k1, lower=-20, upper=20, step=1.e-6;
+lmdif, calls=5000;
+endmatch;
+
+use, period=cell;
+twiss, chrom;
+
+
+plot, haxis=s, vaxis1=betx, bety, vmin=0., vaxis2 = Dx, colour=100;
+plot, haxis=s, vaxis1=mux, muy, vmin=0., colour=100;
+
+
+use, period=ncell;
+twiss, chrom;
+
+
+ptc_create_universe;
+ptc_create_layout,model=2,method=6,nst=1,exact;
+
+
+select flag=ptc_twiss,column=s,betx,beta11,bety,beta22,beta12,beta21,mu1,mu2,beta11p,beta21p,beta22p,beta12p,
+disp1,disp1p,disp1p2,disp1p3;
+ptc_twiss, deltap=0.00, deltap_dependency, closed_orbit,icase=5,file="achr1.tfs",no=6, normal=true, maptable=true;
+
+
+write, table=nonlin,file="achr1_nonlin.tfs";
+write, table=map_table,file="achr1_map_table.tfs";

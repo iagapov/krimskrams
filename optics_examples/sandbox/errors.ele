@@ -1,0 +1,66 @@
+!! to run: elegant errors.ele  -macro=lattice=fodo.lte -macro=seed=1518
+
+&run_setup
+        lattice = <lattice>.lte
+        p_central_mev = 6e3,
+        centroid = %s.cen
+&end
+
+
+&run_control
+&end
+
+&error_control
+        error_log = %s.erl
+&end
+
+&error_element
+        name = QF, item = DX, amplitude = 5e-2, bind = 0
+&end
+&error_element
+        name = QD, item = DY, amplitude = 5e-2, bind = 0
+&end
+
+&error_element
+        name = QF, item = K1, amplitude = 1e-2, bind = 0
+&end
+&error_element
+        name = QD, item = K1, amplitude = 1e-2, bind = 0
+&end
+
+
+
+&bunched_beam &end
+
+&track &end
+
+&run_setup
+        p_central_mev = 6e3,
+        centroid = %s.cen
+&end
+
+&chromaticity
+sextupoles="S*",
+&end
+
+! Compute twiss parameters
+&twiss_output
+    filename = "<lattice>.twi",
+		radiation_integrals = 1,  ! needed for RF setup
+    matched = 1,
+&end
+
+
+&amplification_factors
+    output="<lattice>.amp",
+    type=CSBEND,
+    item=ANGLE,
+    plane=h,
+    number_to_do=5,
+&end
+
+&find_aperture
+    output = "%s.aper", boundary = "%s.abnd",
+    xmin = -0.3, xmax = 0.3, ymax = 0.03,
+    nx = 41, ny = 40, verbosity = 2
+&end

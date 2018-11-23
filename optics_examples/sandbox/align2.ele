@@ -1,0 +1,63 @@
+! to run: elegant align2.ele  -macro=lattice=fodo,seeds=10,seednum=6148677645
+! first turn steering
+
+&global_settings
+	echo_namelists = 1,
+	log_file=out.log,
+&end
+
+&run_setup
+    lattice = "<lattice>.lte",
+		magnets = "<lattice>.mag",
+    p_central_mev = 6000.0,
+	  use_beamline = RING,
+   	default_order = 2,
+  	random_number_seed = <seednum>,
+		echo_lattice=1,
+		parameters=%s.param,
+		centroid=%s.cen,
+		losses=%s.los,
+&end
+
+&load_parameters
+    filename_list = "align1.param"
+&end
+
+&alter_elements name=P*, type=MONI, item=WEIGHT, value=1 &end
+
+&run_control
+n_steps=<seeds>,
+&end
+
+&steering_element
+     plane=h,
+		 name=c*xy,
+		 item=HKICK,
+		 tweek=1.e-5
+&end
+
+&steering_element
+     plane=V,
+		 name=C*XY,
+		 item=VKICK,
+		 tweek=1.e-5
+&end
+
+&correct
+        mode = trajectory, method = global,
+        n_xy_cycles = 10,
+        n_iterations = 10,
+        fixed_length = 1,
+        correction_fraction[0] = 2*0.5,
+        closed_orbit_accuracy = 1e-10,
+        closed_orbit_iterations = 500,
+        closed_orbit_iteration_fraction = 0.1,
+        trajectory_output = %s.traj
+        corrector_output = %s.cor,
+        statistics = %s.stat,
+				bpm_noise[0]=10.e-6, 10.e-6,
+&end
+
+
+&bunched_beam &end
+&track center_on_orbit=1 &end

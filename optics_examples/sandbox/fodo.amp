@@ -1,0 +1,12 @@
+SDDS1
+&description text="Amplification factors for beamline RING from fodo.lte" &end
+&parameter name=WithCorrection, type=string, fixed_value=no &end
+&parameter name=GroupDescription, type=string, fixed_value="First 5 elements of type CSBEND, when ANGLE is changed (by 0.001 RAD)" &end
+&column name=yResponseRMS, units=m/RAD, type=double &end
+&column name=yResponseMaximum, units=m/RAD, type=double &end
+&column name=sMaximum, units=m, type=double &end
+&column name=KickRMS, units=, type=double &end
+&column name=KickMaximum, units=, type=double &end
+&column name=sActuator, units=m, type=double &end
+&column name=FullElementName, type=string &end
+&data mode=ascii, no_row_counts=1 &end
